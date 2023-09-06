@@ -1,66 +1,9 @@
-## Foundry
+# Darwinia community dao deployed oracle and relayer
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
-
-Foundry consists of:
-
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+## Deployments
+### Canonical Cross-chain Deployment Addresses
+|  Contract  |  Canonical Cross-chain Deployment Address  |
+|------------|--------------------------------------------|
+| ORMP       | 0x0000000000BD9dcFDa5C60697039E2b3B28b079b |
+| Oracle     | 0x000000768175E42873650D05B4D138dF7DaDEe43 |
+| Relayer    | 0x0000001207bC87Df42403F0898efBF79A28222BE |
