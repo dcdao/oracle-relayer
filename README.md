@@ -15,22 +15,19 @@
 1. prepare your env_file
 
    ```
-   ETHERSCAN_ARBITRUM_KEY=...
-   ETHERSCAN_PANGOLIN_KEY=...
-   PRIVATE_KEY=0x...
+   # this is the private key you used to deploy oracle and relayer contracts
+   PRIVATE_KEY=... 
    ```
 
 2. run command:
 
    ```bash
    docker run --rm \
-     --env-file /path/to/env_file
-     -it ghcr.io/dcdao/oracle-relayer:v0.1.0 \
-       "<DEPLOY_ADDRESS>" \
-       "<YOUR_RELAYER_ADDRESS>" # this is the address you used to run ormpipe
+     --env-file /path/to/env_file \
+     -it ghcr.io/dcdao/oracle-relayer:v0.1.x \
+       "<RELAY_ADDRESS>" # this is the address you used to send transaction in ormpipe
    ```
 
 Note:
 
-1. `DEPLOY_ADDRESS` is the address of `PRIVATE_KEY`.
-2. `YOUR_RELAYER_ADDRESS` should have enough gas fee on all chains. Currently, `arbitrum-goerli` and `pangolin` are supported.
+* `PRIVATE_KEY` should have enough gas fee on all chains. Currently, `arbitrum-goerli` and `pangolin` are supported.
