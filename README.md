@@ -24,7 +24,7 @@
    ```bash
    docker run --rm \
      --env-file /path/to/env_file \
-     -it ghcr.io/dcdao/oracle-relayer:v0.1.1 \
+     -it ghcr.io/dcdao/oracle-relayer:v0.1.x \
        "<RELAY_ADDRESS>" # this is the address you used to send transaction in ormpipe
    ```
 
