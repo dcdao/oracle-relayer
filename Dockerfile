@@ -12,4 +12,4 @@ WORKDIR /app
 # Build and test the source code
 COPY . .
 
-CMD ["/bin/bash"]
+ENTRYPOINT ["/bin/bash", "-c"]
