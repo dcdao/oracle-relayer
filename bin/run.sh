@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# how to use:
+# source ./bin/run.sh <DEPLOY_ADDRESS> <RELAYER_ADDRESS>
+
 set -eo pipefail
 
 # 检查参数数量
@@ -12,7 +15,6 @@ DEPLOY_ADDRESS=$1
 RELAYER_ADDRESS=$2
 
 # 编译
-echo "Compiling..."
 forge build
 
 # 调用salt.sh并将结果存储到一个变量中
@@ -54,7 +56,7 @@ echo "File deploy.c.json has been modified successfully."
 
 # 部署
 echo "Deploying..."
-make deploy chain-id=421613
-make deploy chain-id=43
+forge script ./script/Deploy.s.sol:DeployScript --private-key $PRIVATE_KEY --chain-id 421613 --broadcast --verify
+forge script ./script/Deploy.s.sol:DeployScript --private-key $PRIVATE_KEY --chain-id 43 --broadcast --verify
 
 echo "Deployed successfully."
