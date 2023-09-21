@@ -1,7 +1,7 @@
 # Use the latest foundry image
 FROM ghcr.io/foundry-rs/foundry
 
-RUN apk add --no-cache bash build-base jq curl python
+RUN apk add --no-cache bash build-base jq curl
 RUN pip install web3
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
