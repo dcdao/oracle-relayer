@@ -10,7 +10,6 @@ contract DcdaoOracle is Constants, IOracle, Verifier {
     event Assigned(bytes32 indexed msgHash, uint256 fee);
     event SetFee(uint256 indexed chainId, uint256 fee);
     event SetDapi(uint256 indexed chainId, address dapi);
-    event SetApproved(address operator, bool approve);
 
     address public immutable PROTOCOL;
     address public owner;
@@ -19,15 +18,9 @@ contract DcdaoOracle is Constants, IOracle, Verifier {
     mapping(uint256 => uint256) public feeOf;
     // chainId => dapi
     mapping(uint256 => address) public dapiOf;
-    mapping(address => bool) public approvedOf;
 
     modifier onlyOwner() {
         require(msg.sender == owner, "!owner");
-        _;
-    }
-
-    modifier onlyApproved() {
-        require(isApproved(msg.sender), "!approve");
         _;
     }
 
@@ -42,21 +35,12 @@ contract DcdaoOracle is Constants, IOracle, Verifier {
         owner = owner_;
     }
 
-    function isApproved(address operator) public view returns (bool) {
-        return approvedOf[operator];
-    }
-
-    function setApproved(address operator, bool approve) public onlyOwner {
-        approvedOf[operator] = approve;
-        emit SetApproved(operator, approve);
-    }
-
-    function withdraw(address to, uint256 amount) external onlyApproved {
+    function withdraw(address to, uint256 amount) external onlyOwner {
         (bool success,) = to.call{value: amount}("");
         require(success, "!withdraw");
     }
 
-    function setFee(uint256 chainId, uint256 fee_) external onlyApproved {
+    function setFee(uint256 chainId, uint256 fee_) external onlyOwner {
         feeOf[chainId] = fee_;
         emit SetFee(chainId, fee_);
     }

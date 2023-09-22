@@ -9,7 +9,6 @@ contract DcdaoRelayer is Constants, IRelayer {
     event Assigned(bytes32 indexed msgHash, uint256 fee, bytes params, bytes32[32] proof);
     event SetDstPrice(uint256 indexed chainId, uint128 dstPriceRatio, uint128 dstGasPriceInWei);
     event SetDstConfig(uint256 indexed chainId, uint64 baseGas, uint64 gasPerByte);
-    event SetApproved(address operator, bool approve);
 
     struct DstPrice {
         uint128 dstPriceRatio; // dstPrice / localPrice * 10^10
@@ -27,15 +26,9 @@ contract DcdaoRelayer is Constants, IRelayer {
     // chainId => price
     mapping(uint256 => DstPrice) public priceOf;
     mapping(uint256 => DstConfig) public configOf;
-    mapping(address => bool) public approvedOf;
 
     modifier onlyOwner() {
         require(msg.sender == owner, "!owner");
-        _;
-    }
-
-    modifier onlyApproved() {
-        require(isApproved(msg.sender), "!approve");
         _;
     }
 
@@ -50,26 +43,17 @@ contract DcdaoRelayer is Constants, IRelayer {
         owner = owner_;
     }
 
-    function isApproved(address operator) public view returns (bool) {
-        return approvedOf[operator];
-    }
-
-    function setApproved(address operator, bool approve) public onlyOwner {
-        approvedOf[operator] = approve;
-        emit SetApproved(operator, approve);
-    }
-
-    function setDstPrice(uint256 chainId, uint128 dstPriceRatio, uint128 dstGasPriceInWei) external onlyApproved {
+    function setDstPrice(uint256 chainId, uint128 dstPriceRatio, uint128 dstGasPriceInWei) external onlyOwner {
         priceOf[chainId] = DstPrice(dstPriceRatio, dstGasPriceInWei);
         emit SetDstPrice(chainId, dstPriceRatio, dstGasPriceInWei);
     }
 
-    function setDstConfig(uint256 chainId, uint64 baseGas, uint64 gasPerByte) external onlyApproved {
+    function setDstConfig(uint256 chainId, uint64 baseGas, uint64 gasPerByte) external onlyOwner {
         configOf[chainId] = DstConfig(baseGas, gasPerByte);
         emit SetDstConfig(chainId, baseGas, gasPerByte);
     }
 
-    function withdraw(address to, uint256 amount) external onlyApproved {
+    function withdraw(address to, uint256 amount) external onlyOwner {
         (bool success,) = to.call{value: amount}("");
         require(success, "!withdraw");
     }
@@ -98,7 +82,7 @@ contract DcdaoRelayer is Constants, IRelayer {
         emit Assigned(msgHash, msg.value, params, IEndpoint(PROTOCOL).prove());
     }
 
-    function relay(Message calldata message, bytes calldata proof, uint256 gasLimit) external onlyApproved {
+    function relay(Message calldata message, bytes calldata proof, uint256 gasLimit) external {
         IEndpoint(PROTOCOL).recv(message, proof, gasLimit);
     }
 }
