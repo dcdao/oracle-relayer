@@ -4,23 +4,19 @@
 # 1. export PRIVATE_KEY=...
 # 2. source ./bin/deploy.sh <RELAY_ADDRESS>
 
-set -eo pipefail
-
 # 检查参数数量
 if [ "$#" -ne 1 ]; then
 	echo "Usage: $0 <RELAY_ADDRESS>"
 	exit 1
 fi
 
-bin_dir=$(dirname "$0")
-root_dir=$(dirname "$bin_dir")
+root_dir=$PWD
+
+bin_dir="$root_dir/bin"
 script_dir="$root_dir/script"
 
 DEPLOY_ADDRESS=$(cast wallet address $PRIVATE_KEY)
 RELAY_ADDRESS=$1
-
-echo $DEPLOY_ADDRESS
-echo $RELAY_ADDRESS
 
 # 编译
 forge build
