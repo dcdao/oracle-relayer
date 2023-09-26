@@ -9,8 +9,6 @@ import "../src/DcdaoOracle.sol";
 import "../src/DcdaoRelayer.sol";
 
 interface III {
-    function isApproved(address operator) external view returns (bool);
-    function setApproved(address operator, bool approve) external;
     function owner() external view returns (address);
     function changeOwner(address owner_) external;
     function setter() external view returns (address);
@@ -87,11 +85,6 @@ contract DeployScript is Common {
     }
 
     function setConfig(address oracle, address relayer) public broadcast {
-        III(oracle).setApproved(oracleOperator, true);
-        require(III(oracle).isApproved(oracleOperator), "!o-operator");
-        III(relayer).setApproved(relayerOperator, true);
-        require(III(relayer).isApproved(relayerOperator), "!r-operator");
-
         III(oracle).changeOwner(dao);
         require(III(oracle).owner() == dao, "!dao");
 

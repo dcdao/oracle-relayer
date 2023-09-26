@@ -6,3 +6,4 @@
 deployments/*/.deploy
 /script/output/*/*.json
 !/script/output/*/*-latest.json
+/generator
