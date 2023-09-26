@@ -45,7 +45,7 @@ After this, you will enter a container with everthing you need to dev contracts.
 5. deploy
 
     1. `export PRIVATE_KEY=...`
-    2. source ./bin/deploy.sh <RELAY_ADDRESS> 
+    2. `source ./bin/deploy.sh <RELAY_ADDRESS>`
 
        RELAY_ADDRESS is the address you used to send transaction in ormpipe
 
