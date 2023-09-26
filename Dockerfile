@@ -11,5 +11,3 @@ WORKDIR /app
 
 # Build and test the source code
 COPY . .
-
-ENTRYPOINT [ "./bin/docker-entrypoint.sh" ]
